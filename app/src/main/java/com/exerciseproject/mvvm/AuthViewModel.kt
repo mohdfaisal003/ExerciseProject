@@ -18,58 +18,6 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class AuthViewModel : ViewModel() {
-
-//    val authResult = MutableLiveData<AuthModel>()
-//
-//    private val auth = FirebaseAuth.getInstance()
-
-//    fun sendVerificationCode(activity: Activity,phoneNumber: String) {
-//        viewModelScope.launch {
-//            try {
-//                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-//                    phoneNumber,
-//                    60,
-//                    TimeUnit.SECONDS,
-//                    activity,
-//                    object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//                        override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-//                            auth.signInWithCredential(phoneAuthCredential).let {
-//                                if (it.isSuccessful) {
-//                                    Log.i("PhoneAuth", phoneAuthCredential.smsCode!!)
-//                                    authResult.value = AuthModel(true,phoneAuthCredential.smsCode,"Success")
-//                                } else {
-//                                    authResult.value = AuthModel(false,null,"auth failed")
-//                                }
-//                            }
-//                        }
-//
-//                        override fun onVerificationFailed(exception: FirebaseException) {
-//                            authResult.value = AuthModel(false,null,"auth failed")
-//                            Log.d("onVerificationFailed",exception.message.toString())
-//                        }
-//
-//                    })
-//            } catch (exception: Exception) {
-//                exception.printStackTrace()
-//                Log.d("PhoneAuthError",exception.message.toString())
-//            }
-//        }
-//
-//
-//    }
-
-//    fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-//        viewModelScope.launch {
-//            try {
-//                val task = auth.signInWithCredential(credential).await()
-//                _authResult.value = task.user != null
-//            } catch (e: Exception) {
-//                _authResult.value = false
-//            }
-//        }
-//    }
-
-    var verificationId = MutableLiveData<String?>()
     var authResult = MutableLiveData<AuthModel>()
     private val auth = FirebaseAuth.getInstance()
 
