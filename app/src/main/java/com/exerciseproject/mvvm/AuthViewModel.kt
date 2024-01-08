@@ -17,8 +17,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class AuthViewModel : ViewModel() {
-    private var verificationId = MutableLiveData<String?>()
-//    var authResult = MutableLiveData<AuthModel>()
+
     var authResult = MutableLiveData<Boolean>()
     private val auth = FirebaseAuth.getInstance()
 
