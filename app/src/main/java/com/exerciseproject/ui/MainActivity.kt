@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         authViewModel.authResult.observe(this, Observer {
             if (it) {
 
-                val intent = Intent(this,DashboardActivity::class.java)
-                intent.putExtra("verificationId",verificationId)
+                val intent = Intent(this, DashboardActivity::class.java)
+                intent.putExtra("verificationId", verificationId)
                 startActivity(intent)
                 Toast.makeText(this, "Successfully Authenticated", Toast.LENGTH_SHORT).show()
             } else {
@@ -38,10 +38,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        binding.idBtnGetOtp .setOnClickListener {
+        binding.idBtnGetOtp.setOnClickListener {
             if (binding.idEdtPhoneNumber.text.isNotEmpty()) {
-//                authViewModel.sendVerificationCode(this, binding.idEdtPhoneNumber.text.toString())
-                authViewModel.sendVerificationCode(this, binding.idEdtPhoneNumber.text.toString(),phoneAuthCallBack)
+                authViewModel.sendVerificationCode(
+                    this,
+                    binding.idEdtPhoneNumber.text.toString(),
+                    phoneAuthCallBack
+                )
             } else {
                 Toast.makeText(this, "Please enter a valid mobile number", Toast.LENGTH_SHORT)
                     .show()
@@ -50,28 +53,35 @@ class MainActivity : AppCompatActivity() {
 
         binding.idBtnVerify.setOnClickListener {
             if (binding.idEdtOtp.text.isNotEmpty()) {
-                authViewModel.verifyCode(this, verificationId.toString(),binding.idEdtOtp.text.toString())
+                authViewModel.verifyCode(
+                    this,
+                    verificationId.toString(),
+                    binding.idEdtOtp.text.toString()
+                )
             }
         }
     }
 
 
-    private val phoneAuthCallBack: OnVerificationStateChangedCallbacks = object : OnVerificationStateChangedCallbacks() {
+    private val phoneAuthCallBack: OnVerificationStateChangedCallbacks =
+        object : OnVerificationStateChangedCallbacks() {
 
             override fun onCodeSent(id: String, forceResendingToken: ForceResendingToken) {
                 super.onCodeSent(id, forceResendingToken)
-                Log.d("onCodeSent",id)
+                Log.d("onCodeSent", id)
                 verificationId = id
             }
+
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                Log.d("onVerificationCompleted",phoneAuthCredential.smsCode.toString())
+                Log.d("onVerificationCompleted", phoneAuthCredential.smsCode.toString())
                 val otp = phoneAuthCredential.smsCode
                 if (otp != null) {
                     binding.idEdtOtp.setText(otp)
                 }
             }
+
             override fun onVerificationFailed(exception: FirebaseException) {
-                Log.e("onVerificationFailed",exception.message.toString())
+                Log.e("onVerificationFailed", exception.message.toString())
                 Toast.makeText(this@MainActivity, exception.message, Toast.LENGTH_LONG).show()
             }
         }
