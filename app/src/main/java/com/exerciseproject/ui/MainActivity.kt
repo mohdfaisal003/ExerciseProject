@@ -1,5 +1,6 @@
 package com.exerciseproject.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         authViewModel.authResult.observe(this, Observer {
             if (it) {
+
+                val intent = Intent(this,DashboardActivity::class.java)
+                intent.putExtra("verificationId",verificationId)
+                startActivity(intent)
                 Toast.makeText(this, "Successfully Authenticated", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Auth Failed", Toast.LENGTH_SHORT).show()
